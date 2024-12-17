@@ -2,7 +2,7 @@ class ArticlesController < ApplicationController
   def index
     response = HTTP
       .headers("Authorization" => "Bearer #{ENV["NEWS_API_KEY"]}")
-      .get("https://newsapi.org/v2/everything?q=z#{params[:search_terms]}")
+      .get("https://newsapi.org/v2/everything?q=#{params[:search_terms]}")
     data = response.parse
     articles = data["articles"]
     render json: articles.uniq { |article| article["url"] }.map { |article| article.merge("id" => article["url"]) }
